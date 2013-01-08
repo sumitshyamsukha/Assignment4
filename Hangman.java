@@ -89,5 +89,5 @@ public class Hangman extends ConsoleProgram {
 	public static int getIncorrectGuesses() {
 		return incorrectGuesses;
 	}
-
+	
 }

@@ -4,8 +4,6 @@
  * This file keeps track of the Hangman display.
  */
 
-import java.awt.Color;
-
 import acm.graphics.GCanvas;
 import acm.graphics.GLabel;
 import acm.graphics.GLine;
@@ -15,6 +13,8 @@ public class HangmanCanvas extends GCanvas {
 
 	private GLabel word;
 	private GLabel incorrect;
+	private String letters = "";
+	private int count = 1;
 
 	public void init() {
 		GLine scaffold = new GLine(X_OFFSET, Y_OFFSET, X_OFFSET,
@@ -28,6 +28,7 @@ public class HangmanCanvas extends GCanvas {
 				+ ROPE_LENGTH);
 		rope.setVisible(true);
 		add(rope);
+
 	}
 
 	/** Resets the display so that only the scaffold appears */
@@ -42,7 +43,26 @@ public class HangmanCanvas extends GCanvas {
 	 * unguessed letters are indicated by hyphens.
 	 */
 	public void displayWord(String word) {
-		//TODO
+		if (count == 1) {
+			this.word = new GLabel(word);
+			this.word.setVisible(true);
+			this.word.setFont("SansSerif-72");
+			this.word.setLocation(100, Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS
+					+ BODY_LENGTH + LEG_LENGTH + 100);
+			add(this.word);
+			this.word.setLabel(word);
+			count++;
+		} else {
+			remove(this.word);
+			this.word = new GLabel(word);
+			this.word.setVisible(true);
+			this.word.setFont("SansSerif-72");
+			this.word.setLocation(100, Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS
+					+ BODY_LENGTH + LEG_LENGTH + 100);
+			add(this.word);
+			this.word.setLabel(word);
+			count++;
+		}
 	}
 
 	/**
@@ -53,7 +73,14 @@ public class HangmanCanvas extends GCanvas {
 	 */
 	public void noteIncorrectGuess(char letter) {
 		nextPart();
-		//TODO
+		letters += letter;
+		incorrect = new GLabel(letters);
+		incorrect.setVisible(true);
+		incorrect.setFont("SansSerif-48");
+		incorrect.setLocation(10, Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS
+				+ BODY_LENGTH + LEG_LENGTH + 200);
+		add(incorrect);
+
 	}
 
 	private void nextPart() {
@@ -77,60 +104,71 @@ public class HangmanCanvas extends GCanvas {
 					Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS + ARM_OFFSET_FROM_HEAD);
 			leftUpperArm.setVisible(true);
 			add(leftUpperArm);
-			GLine leftLowerArm = new GLine(UPPER_ARM_LENGTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + ARM_OFFSET_FROM_HEAD,UPPER_ARM_LENGTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + ARM_OFFSET_FROM_HEAD+LOWER_ARM_LENGTH);
+			GLine leftLowerArm = new GLine(UPPER_ARM_LENGTH, Y_OFFSET
+					+ ROPE_LENGTH + HEAD_RADIUS + ARM_OFFSET_FROM_HEAD,
+					UPPER_ARM_LENGTH, Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS
+							+ ARM_OFFSET_FROM_HEAD + LOWER_ARM_LENGTH);
 			leftLowerArm.setVisible(true);
 			add(leftLowerArm);
 			break;
 		case 4:
-			GLine rightUpperArm = new GLine(BEAM_LENGTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + ARM_OFFSET_FROM_HEAD,BEAM_LENGTH+UPPER_ARM_LENGTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + ARM_OFFSET_FROM_HEAD );
+			GLine rightUpperArm = new GLine(BEAM_LENGTH, Y_OFFSET + ROPE_LENGTH
+					+ HEAD_RADIUS + ARM_OFFSET_FROM_HEAD, BEAM_LENGTH
+					+ UPPER_ARM_LENGTH, Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS
+					+ ARM_OFFSET_FROM_HEAD);
 			rightUpperArm.setVisible(true);
 			add(rightUpperArm);
-			GLine rightLowerArm = new GLine(BEAM_LENGTH+UPPER_ARM_LENGTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + ARM_OFFSET_FROM_HEAD,BEAM_LENGTH+UPPER_ARM_LENGTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + ARM_OFFSET_FROM_HEAD+LOWER_ARM_LENGTH);
+			GLine rightLowerArm = new GLine(
+					BEAM_LENGTH + UPPER_ARM_LENGTH,
+					Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS + ARM_OFFSET_FROM_HEAD,
+					BEAM_LENGTH + UPPER_ARM_LENGTH, Y_OFFSET + ROPE_LENGTH
+							+ HEAD_RADIUS + ARM_OFFSET_FROM_HEAD
+							+ LOWER_ARM_LENGTH);
 			rightLowerArm.setVisible(true);
 			add(rightLowerArm);
 			break;
 		case 5:
-			GLine leftHip=new GLine(BEAM_LENGTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH,BEAM_LENGTH-HIP_WIDTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH);
+			GLine leftHip = new GLine(BEAM_LENGTH, Y_OFFSET + ROPE_LENGTH
+					+ HEAD_RADIUS + BODY_LENGTH, BEAM_LENGTH - HIP_WIDTH,
+					Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS + BODY_LENGTH);
 			leftHip.setVisible(true);
 			add(leftHip);
-			GLine leftLeg=new GLine(BEAM_LENGTH-HIP_WIDTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH,BEAM_LENGTH-HIP_WIDTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH+LEG_LENGTH);
+			GLine leftLeg = new GLine(BEAM_LENGTH - HIP_WIDTH, Y_OFFSET
+					+ ROPE_LENGTH + HEAD_RADIUS + BODY_LENGTH, BEAM_LENGTH
+					- HIP_WIDTH, Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS
+					+ BODY_LENGTH + LEG_LENGTH);
 			leftLeg.setVisible(true);
 			add(leftLeg);
-			
+
 			break;
 		case 6:
-			GLine rightHip = new GLine(BEAM_LENGTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH,BEAM_LENGTH+HIP_WIDTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH);
+			GLine rightHip = new GLine(BEAM_LENGTH, Y_OFFSET + ROPE_LENGTH
+					+ HEAD_RADIUS + BODY_LENGTH, BEAM_LENGTH + HIP_WIDTH,
+					Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS + BODY_LENGTH);
 			rightHip.setVisible(true);
 			add(rightHip);
-			GLine rightLeg = new GLine(BEAM_LENGTH+HIP_WIDTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH,BEAM_LENGTH+HIP_WIDTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH+LEG_LENGTH);
+			GLine rightLeg = new GLine(BEAM_LENGTH + HIP_WIDTH, Y_OFFSET
+					+ ROPE_LENGTH + HEAD_RADIUS + BODY_LENGTH, BEAM_LENGTH
+					+ HIP_WIDTH, Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS
+					+ BODY_LENGTH + LEG_LENGTH);
 			rightLeg.setVisible(true);
 			add(rightLeg);
 			break;
 		case 7:
-			GLine leftFoot = new GLine(BEAM_LENGTH-HIP_WIDTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH+LEG_LENGTH,BEAM_LENGTH-HIP_WIDTH-FOOT_LENGTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH+LEG_LENGTH);
+			GLine leftFoot = new GLine(BEAM_LENGTH - HIP_WIDTH, Y_OFFSET
+					+ ROPE_LENGTH + HEAD_RADIUS + BODY_LENGTH + LEG_LENGTH,
+					BEAM_LENGTH - HIP_WIDTH - FOOT_LENGTH, Y_OFFSET
+							+ ROPE_LENGTH + HEAD_RADIUS + BODY_LENGTH
+							+ LEG_LENGTH);
 			leftFoot.setVisible(true);
 			add(leftFoot);
 			break;
 		case 8:
-			GLine rightFoot = new GLine(BEAM_LENGTH+HIP_WIDTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH+LEG_LENGTH,BEAM_LENGTH+HIP_WIDTH+FOOT_LENGTH,Y_OFFSET + ROPE_LENGTH
-					+ HEAD_RADIUS + BODY_LENGTH+LEG_LENGTH);
+			GLine rightFoot = new GLine(BEAM_LENGTH + HIP_WIDTH, Y_OFFSET
+					+ ROPE_LENGTH + HEAD_RADIUS + BODY_LENGTH + LEG_LENGTH,
+					BEAM_LENGTH + HIP_WIDTH + FOOT_LENGTH, Y_OFFSET
+							+ ROPE_LENGTH + HEAD_RADIUS + BODY_LENGTH
+							+ LEG_LENGTH);
 			rightFoot.setVisible(true);
 			add(rightFoot);
 			break;
