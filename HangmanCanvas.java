@@ -1,9 +1,3 @@
-/*
- * File: HangmanCanvas.java
- * ------------------------
- * This file keeps track of the Hangman display.
- */
-
 import acm.graphics.GCanvas;
 import acm.graphics.GLabel;
 import acm.graphics.GLine;
@@ -19,16 +13,15 @@ public class HangmanCanvas extends GCanvas {
 	public void init() {
 		GLine scaffold = new GLine(X_OFFSET, Y_OFFSET, X_OFFSET,
 				SCAFFOLD_HEIGHT);
-		scaffold.setVisible(true);
-		add(scaffold);
 		GLine beam = new GLine(X_OFFSET, Y_OFFSET, BEAM_LENGTH, Y_OFFSET);
-		beam.setVisible(true);
-		add(beam);
 		GLine rope = new GLine(BEAM_LENGTH, Y_OFFSET, BEAM_LENGTH, Y_OFFSET
 				+ ROPE_LENGTH);
+		scaffold.setVisible(true);
+		beam.setVisible(true);
 		rope.setVisible(true);
+		add(scaffold);
+		add(beam);
 		add(rope);
-
 	}
 
 	/** Resets the display so that only the scaffold appears */
@@ -61,7 +54,6 @@ public class HangmanCanvas extends GCanvas {
 					+ BODY_LENGTH + LEG_LENGTH + 100);
 			add(this.word);
 			this.word.setLabel(word);
-			count++;
 		}
 	}
 
@@ -80,7 +72,6 @@ public class HangmanCanvas extends GCanvas {
 		incorrect.setLocation(10, Y_OFFSET + ROPE_LENGTH + HEAD_RADIUS
 				+ BODY_LENGTH + LEG_LENGTH + 200);
 		add(incorrect);
-
 	}
 
 	private void nextPart() {

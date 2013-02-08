@@ -1,12 +1,4 @@
-/*
- * File: Hangman.java
- * ------------------
- * This program will eventually play the Hangman game from
- * Assignment #4.
- */
-
 import acm.io.IOConsole;
-import acm.io.IODialog;
 import acm.program.ConsoleProgram;
 import acm.util.RandomGenerator;
 
@@ -17,7 +9,6 @@ public class Hangman extends ConsoleProgram {
 	private String word;
 	private RandomGenerator rgen = RandomGenerator.getInstance();
 	private IOConsole io = getConsole();
-	private IODialog id = getDialog();
 	private boolean guessed = false;
 	private char letters[];
 	private HangmanCanvas canvas;
@@ -25,14 +16,14 @@ public class Hangman extends ConsoleProgram {
 	public void init() {
 		canvas = new HangmanCanvas();
 		add(canvas);
-		canvas.init();
+		canvas.reset();
+		hl = new HangmanLexicon();
+		word = hl.getWord(rgen.nextInt(10));
+		letters = new char[word.length()];
 	}
 
 	public void run() {
 		char g = '0';
-		hl = new HangmanLexicon();
-		word = hl.getWord(rgen.nextInt(10));
-		letters = new char[word.length()];
 		for (int i = 0; i < letters.length; i++)
 			letters[i] = '-';
 		println("Welcome to Hangman!");
@@ -89,5 +80,4 @@ public class Hangman extends ConsoleProgram {
 	public static int getIncorrectGuesses() {
 		return incorrectGuesses;
 	}
-	
 }
